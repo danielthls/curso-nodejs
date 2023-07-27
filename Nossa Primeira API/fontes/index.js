@@ -10,7 +10,7 @@ app.get("/produtos", function(request, response) {
 
 app.get("/ping", function(request, response) {
     response.status(200)
-        .send("pong");
+        .send("pong...");
 });
 
 app.listen(3000, function() {
