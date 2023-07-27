@@ -1,5 +1,8 @@
 import express from "express";
 import cors from "cors";
+import db from "./config/database.js";
+import jwt from "./config/token.js"
+import routeUsuario from "./routes/route.usuario.js";
 
 const app = express();
 
@@ -10,9 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 //Rotas
-app.get("/usuarios", function(req, res) {
-    res.status(200).send("Listando os usuários...");
-})
+app.use(routeUsuario);
 
 
 app.listen(8082, function() {
