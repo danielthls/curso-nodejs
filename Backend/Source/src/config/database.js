@@ -18,4 +18,4 @@ db.getConnection(function(err, conn){
     }
 });
 
-export default db;
+export {db};

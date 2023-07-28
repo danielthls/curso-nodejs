@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import db from "./config/database.js";
+import {db} from "./config/database.js";
 import jwt from "./config/token.js"
 import routeUsuario from "./routes/route.usuario.js";
 
