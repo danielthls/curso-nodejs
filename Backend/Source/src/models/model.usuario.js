@@ -20,12 +20,16 @@ const login = (email, senha, callback) => {
 
 }
 
-const inserir = (req, res) => {
+const inserir = (id_usuario, callback) => {
     
 }
 
-const listarId = (req, res) => {
+const listarId = (id_usuario, callback) => {
+    let ssql = "select id_usuario, nome, email, dt_cadastro from tab_usuario where id_usuario = ?";
     
+    db.query(ssql, [id_usuario], function(err, result) {
+        callback(err, result);
+    });
 }
 
 const editar = (req, res) => {

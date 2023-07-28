@@ -20,7 +20,22 @@ const inserir = (req, res) => {
 }
 
 const listarId = (req, res) => {
-    res.status(200).send({id_usuario: req.params.id_usuario});
+
+    //req.id_usuario = 1; // Vai ser obtido pelo token;
+    if (req.params.id_usuario != req.id_usuario) {
+        return res.status(401).json({erro:  "Operação não permitida."})
+    }
+
+
+    modelUsuario.listarId(req.id_usuario, function(err, result) {
+        if (err) {
+            res.status(500).send(err);        
+        }
+        else {
+            //result[0]["token"] = "00000000000";
+            res.status(200).json(result[0]);
+        }
+    });
 }
 
 const editar = (req, res) => {
