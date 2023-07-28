@@ -32,8 +32,12 @@ const listarId = (id_usuario, callback) => {
     });
 }
 
-const editar = (req, res) => {
+const editar = (id_usuario, nome, email, callback) => {
+    let ssql = "update tab_usuario set nome = ?, email = ? where id_usuario = ? ";
     
+    db.query(ssql, [nome, email, id_usuario], function(err, result) {
+        callback(err, result);
+    });
 }
 
 export default {login, inserir, listarId, editar};
