@@ -1,4 +1,5 @@
 import modelUsuario from "../models/model.usuario.js";
+import jwt from "../config/token.js";
 
 const login = (req, res) => {
     modelUsuario.login(req.body.email, req.body.senha, function(err, result) {
@@ -9,7 +10,7 @@ const login = (req, res) => {
             res.status(401).json({erro: "E-mail ou senha inválida"});
         }
         else {
-            //result[0]["token"] = "00000000000";
+            result[0]["token"] = jwt.createJWT(result[0].id_usuario);
             res.status(200).json(result[0]);
         }
     })
@@ -21,7 +22,7 @@ const inserir = (req, res) => {
             res.status(500).send(err);
         }
         else {
-            result["token"] = "0000000000000000";
+            result["token"] = jwt.createJWT(result.id_usuario);;
             res.status(201).json(result);
         }
     })
@@ -29,7 +30,7 @@ const inserir = (req, res) => {
 
 const listarId = (req, res) => {
 
-    req.id_usuario = 1;
+    
 
     if (req.params.id_usuario != req.id_usuario) {
         return res.status(401).json({erro:  "Operação não permitida."})
