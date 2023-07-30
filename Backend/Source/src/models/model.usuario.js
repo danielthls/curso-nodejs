@@ -20,8 +20,50 @@ const login = (email, senha, callback) => {
 
 }
 
-const inserir = (id_usuario, callback) => {
-    
+const inserir = (dadosUsuario, callback) => {
+    db.getConnection((err, conn) => {
+
+        conn.beginTransaction((err) => {
+
+            let ssql = "insert into tab_usuario(nome, email, senha, dt_cadastro) ";
+            ssql += "values (?, ?, ?, current_timestamp()) ";
+
+            conn.query(ssql, [dadosUsuario.nome, dadosUsuario.email, dadosUsuario.senha], (err, result) => {
+
+                if (err) {
+                    conn.rollback;
+                    callback(err, result);
+                }
+                else {
+
+                    const id_usuario = result.insertId;
+                    ssql = "insert into tab_usuario_endereco(id_usuario, endereco, complemento, ";
+                    ssql += "bairro, cidade, uf, cep, ind_padrao, cod_cidade) ";
+                    ssql += "values (?, ?, ?, ?, ?, ?, ?, 'S', ?)";
+
+                    conn.query(ssql, [id_usuario, dadosUsuario.endereco, dadosUsuario.complemento, 
+                    dadosUsuario.bairro, dadosUsuario.cidade, dadosUsuario.uf, dadosUsuario.cep, 
+                    dadosUsuario.cod_cidade], (err, result) => {
+                        if (err) {
+                            conn.rollback;
+                            callback(err, result);
+                        }
+                        else {
+                            conn.commit();
+                            callback(err, {id_usuario: id_usuario});
+                        }
+
+                        conn.release;
+                        
+                    })
+
+                }
+
+            })
+
+        })
+
+    });
 }
 
 const listarId = (id_usuario, callback) => {

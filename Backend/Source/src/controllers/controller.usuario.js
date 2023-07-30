@@ -16,7 +16,15 @@ const login = (req, res) => {
 }
 
 const inserir = (req, res) => {
-    res.status(200).send({id_usuario: 123});
+    modelUsuario.inserir(req.body, function(err, result) {
+        if(err) {
+            res.status(500).send(err);
+        }
+        else {
+            result["token"] = "0000000000000000";
+            res.status(201).json(result);
+        }
+    })
 }
 
 const listarId = (req, res) => {
