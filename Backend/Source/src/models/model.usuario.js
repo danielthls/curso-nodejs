@@ -1,13 +1,14 @@
 import {db} from "../config/database.js";
+import bcrypt from "bcrypt";
 
-const login = (email, senha, callback) => {
-    let ssql = "select u.id_usuario, u.nome, u.email, u.dt_cadastro, ";
+const login = (email, callback) => {
+    let ssql = "select u.id_usuario, u.nome, u.email, u.dt_cadastro, u.senha, ";
     ssql += "e.endereco, e.complemento, e.bairro, e.cidade, e.uf, e.cep, e.cod_cidade ";
     ssql += "from tab_usuario u ";
     ssql += "left join tab_usuario_endereco e on (e.id_usuario = u.id_usuario and e.ind_padrao = 'S' ) ";
-    ssql += "where u.email=? and u.senha=? ";
+    ssql += "where u.email=? ";
     
-    db.query(ssql, [email, senha], function(err, result) {
+    db.query(ssql, [email], function(err, result) {
         callback(err, result);
         /*
         if (err) {
@@ -23,12 +24,14 @@ const login = (email, senha, callback) => {
 const inserir = (dadosUsuario, callback) => {
     db.getConnection((err, conn) => {
 
-        conn.beginTransaction((err) => {
+        conn.beginTransaction(async (err) => {
 
             let ssql = "insert into tab_usuario(nome, email, senha, dt_cadastro) ";
             ssql += "values (?, ?, ?, current_timestamp()) ";
 
-            conn.query(ssql, [dadosUsuario.nome, dadosUsuario.email, dadosUsuario.senha], (err, result) => {
+            const criptSenha = await bcrypt.hash(dadosUsuario.senha, 10);
+
+            conn.query(ssql, [dadosUsuario.nome, dadosUsuario.email, criptSenha], (err, result) => {
 
                 if (err) {
                     conn.rollback;
