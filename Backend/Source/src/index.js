@@ -5,6 +5,7 @@ import jwt from "./config/token.js"
 import routeUsuario from "./routes/route.usuario.js";
 import routeCategoria from "./routes/route.categoria.js";
 import routeBanner from "./routes/route.banner.js";
+import routerCidade from "./routes/route.cidade.js";
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.use(cors());
 app.use(routeUsuario);
 app.use(routeCategoria);
 app.use(routeBanner);
-
+app.use(routerCidade);
 
 app.listen(8082, function() {
     console.log("Servidor conectado na porta 8082")
