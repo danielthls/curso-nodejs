@@ -7,6 +7,7 @@ import routeCategoria from "./routes/route.categoria.js";
 import routeBanner from "./routes/route.banner.js";
 import routerCidade from "./routes/route.cidade.js";
 import routerCupom from "./routes/route.cupom.js";
+import routerEstabelecimento from "./routes/route.estabelecimento.js";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(routeCategoria);
 app.use(routeBanner);
 app.use(routerCidade);
 app.use(routerCupom);
+app.use(routerEstabelecimento)
 
 app.listen(8082, function() {
     console.log("Servidor conectado na porta 8082")
