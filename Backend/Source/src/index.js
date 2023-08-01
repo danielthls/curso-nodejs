@@ -3,6 +3,8 @@ import cors from "cors";
 import {db} from "./config/database.js";
 import jwt from "./config/token.js"
 import routeUsuario from "./routes/route.usuario.js";
+import routeCategoria from "./routes/route.categoria.js";
+import routeBanner from "./routes/route.banner.js";
 
 const app = express();
 
@@ -14,6 +16,8 @@ app.use(cors());
 
 //Rotas
 app.use(routeUsuario);
+app.use(routeCategoria);
+app.use(routeBanner);
 
 
 app.listen(8082, function() {

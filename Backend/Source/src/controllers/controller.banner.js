@@ -1,7 +1,7 @@
-import modelCategoria from "../models/model.categoria.js";
+import modelBanner from "../models/model.banner.js";
 
 const listar = (req, res) => {
-    modelCategoria.listar(req.query.cod_cidade, (err, result) => {
+    modelBanner.listar(req.query.cod_cidade, (err, result) => {
         if (err) {
             res.status(500).send(err);
         }
